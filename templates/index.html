@@ -69,7 +69,7 @@
             padding: 15px;
             font-size: 16px;
         }
-        .image-preview img {
+        .collected-image {
             border-radius: 8px;
             border: 2px solid #ddd;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -174,7 +174,7 @@
                     <p><strong>Email:</strong> {{ item.email }}</p>
                     <button id="downloadBtn" class="btn btn-secondary">Download Collected Data</button>
                     {% if item.webcam_image_path != 'None' %}
-                        <img src="{{ url_for('download_image', image_name=item.webcam_image_path.split('/')[-1]) }}" alt="Webcam Image">
+                        <img src="{{ url_for('download_image', image_name=item.webcam_image_path.split('/')[-1]) }}" alt="Webcam Image" class="collected-image">
                         <a href="{{ url_for('download_image', image_name=item.webcam_image_path.split('/')[-1]) }}" class="btn btn-secondary mt-2">Download Collected Image</a>
                     {% else %}
                         <p>No image collected.</p>
