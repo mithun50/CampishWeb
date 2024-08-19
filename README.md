@@ -1,7 +1,8 @@
 # Campishing_Web
 
 Welcome to the Campishing website repository! This project provides a comprehensive platform for URL shortening and management, including an admin panel for administrative tasks.
-
+- **logo**
+![logo](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/logo.png)
 ## Features
 - **Collecting_Data**: Flask server is used to collect the information from the Victim and Collect the Image Data.
 - **URL Shortening**: Convert long URLs into shortened, manageable links.
@@ -71,3 +72,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Email**: [Email Me](mailto:mithungowda.b7411@gmail.com)
 - **Instagram**: [Follow Me on Instagram](https://www.instagram.com/mithun.gowda.b)
+
+  ## Screenshots
+
+![Screenshot 1](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc1.png)
+![Screenshot 2](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc2.png)
+![Screenshot 3](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc3.png)
+![Screenshot 4](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc4.png)
+![Screenshot 5](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc5.png)
+![Screenshot 6](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc6.png)
+![Screenshot 7](https://github.com/mithun50/CampishWeb/raw/main/assets/screenshots/sc7.png)
+**Thankyou**
+
