@@ -15,12 +15,12 @@ To set up the Campishing website locally, follow these steps:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/Campishingwebsite.git
+   git clone https://github.com/mithun50/CampishWeb.git
    ```
 
 2. **Navigate to the Project Directory:**
    ```bash
-   cd Campishingwebsite
+   cd CampishWeb
    ```
 
 3. **Install Dependencies:**
@@ -69,5 +69,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact and Follow
 
-- **Email**: [Email Me](mailto: mithungowda.b7411@gmail.com)
+- **Email**: [Email Me](mailto:mithungowda.b7411@gmail.com)
 - **Instagram**: [Follow Me on Instagram](https://www.instagram.com/mithun.gowda.b)
