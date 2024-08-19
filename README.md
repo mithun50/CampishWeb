@@ -40,7 +40,7 @@ To set up the Campishing website locally, follow these steps:
 
 5. **Run the Application:**
    ```bash
-   flask run
+   python main.py
    ```
 
 6. **Access the Website:**
@@ -71,7 +71,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For any questions or issues, please reach out to [✉️](mailto: mithungowda.b7411@gmail.com).
-```
+For any questions or issues, please reach out to (mailto: mithungowda.b7411@gmail.com).
 
 Feel free to adjust any specifics to match your setup and features.
