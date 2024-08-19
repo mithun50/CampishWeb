@@ -31,9 +31,7 @@ To set up the Campishing website locally, follow these steps:
 4. **Set Up Environment Variables:**
    Create a `.env` file in the project root with the following environment variables:
    ```env
-   FLASK_APP=app.py
    FLASK_ENV=development
-   SECRET_KEY=your-secret-key
    usr=your-user-name
    pass=your-password
    ```
@@ -69,8 +67,7 @@ We welcome contributions! If you have suggestions or improvements, please submit
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
+## Contact and Follow
 
-For any questions or issues, please reach out to (mailto: mithungowda.b7411@gmail.com).
-
-Feel free to adjust any specifics to match your setup and features.
+- **Email**: [Email Me](mailto: mithungowda.b7411@gmail.com) ![Email Logo](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/solid/envelope.svg)
+- **Instagram**: [Follow Me on Instagram](https://www.instagram.com/mithun.gowda.b) ![Instagram Logo](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/brands/instagram.svg)
