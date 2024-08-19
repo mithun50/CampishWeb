@@ -69,5 +69,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact and Follow
 
-- **Email**: [Email Me](mailto: mithungowda.b7411@gmail.com) ![Email Logo](https://upload.wikimedia.org/wikipedia/commons/e/e6/Email_icon_%28Noun_Project%29.svg)
-- **Instagram**: [Follow Me on Instagram](https://www.instagram.com/mithun.gowda.b) ![Instagram Logo](https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png)
+- **Email**: [Email Me](mailto: mithungowda.b7411@gmail.com)
+- **Instagram**: [Follow Me on Instagram](https://www.instagram.com/mithun.gowda.b)
