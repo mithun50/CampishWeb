@@ -70,8 +70,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact and Follow
 
-- **Email**: [Email Me](mailto:mithungowda.b7411@gmail.com)
-- **Instagram**: [Follow Me on Instagram](https://www.instagram.com/mithun.gowda.b)
+<div align="left">
+  <a href="malio:mithungowda.b7411@gmail.com" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Gmail&logo=gmail&label=&color=D14836&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="gmail logo"  />
+  </a>
+  <a href="http://instagram.com/mithun.gowda.b" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Instagram&logo=instagram&label=&color=E4405F&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="instagram logo"  />
+  </a>
+  <a href="https://t.me/@MITHUNGOWDA_B" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Telegram&logo=telegram&label=&color=2CA5E0&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="telegram logo"  />
+  </a>
+</div>
 
   ## **Screenshots*
 
