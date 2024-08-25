@@ -8,6 +8,11 @@ import base64
 import sqlite3
 import requests
 import tempfile
+import subprocess
+import platform
+import zipfile
+from pyngrok import ngrok
+
 
 
 
@@ -23,6 +28,7 @@ login_manager.login_view = 'login'
 DATABASE = 'data.db'
 redirects = {}
 collected_data = {}
+ngrok_url = None
 
 # Initialize SQLite database
 def init_db():
@@ -91,7 +97,13 @@ def create():
     redirects[redirect_id] = {'target_url': target_url, 'delay': delay, 'email': email}
     session['email'] = email
     
-    redirect_url = url_for('redirect_handler', redirect_id=redirect_id, _external=True)
+    # Use the ngrok URL if available
+    if ngrok_url:
+        relative_url = url_for('redirect_handler', redirect_id=redirect_id, _external=False)
+        redirect_url = f"{ngrok_url}/{relative_url.lstrip('/')}"
+    else:
+        redirect_url = url_for('redirect_handler', redirect_id=redirect_id, _external=True)
+
     
     # Shorten the URL using the external API
     short_url = shorten_url(redirect_url)
@@ -103,7 +115,6 @@ def create():
         'original_url': redirect_url,
         'shortened_url': short_url
     })
-
 @app.route('/redirect/<redirect_id>')
 def redirect_handler(redirect_id):
     redirect_info = redirects.get(redirect_id)
@@ -350,8 +361,26 @@ def shorten_url(long_url):
         return None
 
 
+def set_ngrok_url(url):
+    global ngrok_url
+    ngrok_url = url
+
+def start_ngrok(port):
+    global ngrok_url
+    # Retrieve the ngrok auth token from the environment variable
+    ngrok_tokens = os.getenv('ngrok_token')
+    if ngrok_token:
+        ngrok.set_auth_token(ngrok_tokens)
+    else:
+        raise EnvironmentError("NGROK_AUTH_TOKEN environment variable not set")
+
+    # Start ngrok to forward the Flask server port
+    tunnel = ngrok.connect(port)
+    ngrok_url = tunnel.public_url
+    print(f"ngrok is forwarding to {ngrok_url}")
 
 if __name__ == '__main__':
+    start_ngrok(port=8000)  # Start ngrok before running Flask
     init_db()
     create_default_user()
-    app.run(host="0.0.0.0", port=8000, debug=True, use_reloader=False)  # 
+    app.run(host="0.0.0.0", port=8000, debug=True, use_reloader=False)  # Start Flask
