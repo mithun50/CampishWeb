@@ -45,7 +45,7 @@ To set up the Campishing website locally, follow these steps:
 6. **Access the Website:**
    Open your web browser and go to `http://127.0.0.1:5000/` to view the application.
 7. **Port Forwarding:**
-   We integrated the pyngrok in our project and Create an account in the <a href="ngrok.com">NGROK<a>and Copy the auth_token from the Ngrok Dashboard
+   We integrated the pyngrok in our project and Create an account in the <a href="http://ngrok.com">NGROK<a>and Copy the auth_token from the Ngrok Dashboard
 ```bash
    ngrok_token=your-ngrok-token
 ```
