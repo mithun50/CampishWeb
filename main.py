@@ -361,26 +361,39 @@ def shorten_url(long_url):
         return None
 
 
-def set_ngrok_url(url):
-    global ngrok_url
-    ngrok_url = url
+
+
+def check_ngrok_token(token):
+    try:
+        # Test the token by making a request to the ngrok API
+        response = requests.get('https://api.ngrok.com/user', headers={'Authorization': f'Bearer {token}'})
+        response.raise_for_status()  # Will raise an HTTPError if the response was an error
+        return True
+    except requests.RequestException:
+        return False
 
 def start_ngrok(port):
     global ngrok_url
-    # Retrieve the ngrok auth token from the environment variable
-    ngrok_tokens = os.getenv('ngrok_token')
-    if ngrok_token:
-        ngrok.set_auth_token(ngrok_tokens)
-    else:
-        raise EnvironmentError("NGROK_AUTH_TOKEN environment variable not set")
+    ngrok_token = os.getenv('ngrok_token')
+    
+    if not ngrok_token:
+        print("NGROK_AUTH_TOKEN environment variable not set")
+        return False
 
-    # Start ngrok to forward the Flask server port
+    if not check_ngrok_token(ngrok_token):
+        print("Invalid ngrok token")
+        return False
+
+    ngrok.set_auth_token(ngrok_token)
     tunnel = ngrok.connect(port)
     ngrok_url = tunnel.public_url
     print(f"ngrok is forwarding to {ngrok_url}")
+    return True
 
 if __name__ == '__main__':
-    start_ngrok(port=8000)  # Start ngrok before running Flask
+    ngrok_running = start_ngrok(port=8000)
+    if not ngrok_running:
+        print("Starting Flask without ngrok")
     init_db()
     create_default_user()
     app.run(host="0.0.0.0", port=8000, debug=True, use_reloader=False)  # Start Flask
