@@ -2,3 +2,4 @@ Flask
 Flask-login
 requests
 bs4
+pyngrok
